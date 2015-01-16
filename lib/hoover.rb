@@ -1,28 +1,49 @@
 class Hoover
-  attr_accessor :position, :x, :y
+  attr_accessor :dirt_patches, :patches_cleaned, :position, :x, :y
 
-  def initialize(start_pos, room)
-    @x, @y       = start_pos.split.map(&:to_i)
-    @rm_x, @rm_y = room.split.map(&:to_i)
+  def initialize(start_pos, room, dirt_patches = [])
+    @x, @y           = start_pos.split.map(&:to_i)
+    @rm_x, @rm_y     = room.split.map(&:to_i)
+    @dirt_patches    = dirt_patches
+    @patches_cleaned = 0 
   end
 
-  def move(direction)
-    if direction == 'N'
-      move_north
-    elsif direction == 'S'
-      move_south
-    elsif direction == 'E'
-      move_east
-    elsif direction == 'W'
-      move_west
+  def move(directions)
+    if on_dirt_patch?
+      clean
+    end
+
+    directions.each_char do |direction|
+      if direction == 'N'
+        move_north
+      elsif direction == 'S'
+        move_south
+      elsif direction == 'E'
+        move_east
+      elsif direction == 'W'
+        move_west
+      end
+
+      if on_dirt_patch?
+        clean
+      end
     end
   end
 
   def position
     "#{x} #{y}"
   end
-
+  
   private
+
+  def on_dirt_patch?
+    dirt_patches.include?(position)
+  end
+
+  def clean
+    self.patches_cleaned += 1 
+    self.dirt_patches.delete(position)
+  end
 
   def move_north
     @y += 1 if @y < @rm_y

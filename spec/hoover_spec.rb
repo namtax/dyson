@@ -1,9 +1,10 @@
 describe Hoover do
-  describe '#position' do
-    let(:hoover)    { Hoover.new(start_pos, room) }
-    let(:start_pos) { %q[1 2]}
-    let(:room)      { %q[5 5]}
+  let(:hoover)    { Hoover.new(start_pos, room, dirt) }
+  let(:start_pos) { %q[1 2]}
+  let(:room)      { %q[5 5]}
+  let(:dirt)      { [] }
 
+  describe '#position' do
     context 'start' do
       it { expect(hoover.position).to eq %q[1 2] }
     end
@@ -71,8 +72,45 @@ describe Hoover do
         let(:start_pos) { %q[0 2]}
         it 'slides' do
           hoover.move('W')
-          expect(hoover.position).to eq %[0 2]
+          expect(hoover.position).to eq %q[0 2]
         end
+      end
+
+      context 'multi' do 
+        let(:start_pos) { %q[0 0]}
+        it 'slides' do
+          hoover.move('EEWW')
+          expect(hoover.position).to eq %q[0 0]
+        end
+      end
+    end
+  end
+
+  describe '#patches_cleaned' do 
+    context 'dirt on start position' do 
+      let(:start_pos) { %q[0 0]}
+      let(:dirt)      { ["0 0"] } 
+      it do 
+        hoover.move('E')
+        expect(hoover.patches_cleaned).to eq 1
+      end
+    end
+
+    context 'dirt' do 
+      let(:start_pos) { %q[0 0]}
+      let(:dirt)      { ["0 1"] } 
+      it do 
+        hoover.move('N')
+        expect(hoover.patches_cleaned).to eq 1
+      end
+    end
+
+    context 'patch removed' do 
+      let(:start_pos) { %q[0 0]}
+      let(:dirt)      { ["0 1"] } 
+      it do 
+        hoover.move('NSN')
+        expect(hoover.patches_cleaned).to eq 1
       end
     end
   end
