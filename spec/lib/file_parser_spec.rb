@@ -28,9 +28,15 @@ describe FileParser do
     it     { expect{subject}.to raise_error('Please provide valid coords - see readme!') }
   end
 
-  context 'input contains invalid instructions' do 
-    let(:invalid_coords) { ["5 5", "1 2\n", "1 0\n", "2 2\n", "2 3\n", "XXNNESEESWNWW"] } 
+  context 'coords out of bounds' do 
+    let(:invalid_coords) { ["5 5", "10 2\n", "1 0\n", "2 2\n", "2 3\n", "NNESEESWNWW"] } 
     before { allow(File).to receive(:readlines).and_return(invalid_coords) }
+    it     { expect{subject}.to raise_error('Please provide valid coords - see readme!') }
+  end
+
+  context 'input contains invalid instructions' do 
+    let(:invalid_instruct) { ["5 5", "1 2\n", "1 0\n", "2 2\n", "2 3\n", "XXNNESEESWNWW"] } 
+    before { allow(File).to receive(:readlines).and_return(invalid_instruct) }
     it     { expect{subject}.to raise_error('Please provide valid instructions - see readme!') }
   end
 end

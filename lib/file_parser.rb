@@ -8,20 +8,20 @@ class FileParser
   def initialize
     raise error_message unless File.exists?(file_path)
     @input  = File.readlines(file_path).map(&:strip)
-    @coords = fetch_coords
+    @coords = parse_coords
     validate
   end
 
   def room_dimensions
-    @coords[0]
+    coords[0]
   end
 
   def hoover_pos
-    @coords[1]
+    coords[1]
   end
 
   def dirt_patches
-    @coords[2..-1]
+    coords[2..-1]
   end
 
   def instructions
@@ -38,7 +38,7 @@ class FileParser
     'bin/input.txt'
   end
 
-  def fetch_coords
+  def parse_coords
     input[0...-1].map{ |i| i.split.map(&:to_i) }
   end
 
@@ -53,11 +53,16 @@ class FileParser
   end
 
   def valid_coords?
-    (input_coords.grep(/^(\d) (\d)$/).count == REQUIRED_NUMBER_OF_COORDS)
+    (input_coords.grep(/^(\d+) (\d+)$/).count == REQUIRED_NUMBER_OF_COORDS) && 
+    ([hoover_pos] + dirt_patches).all?{ |x,y| within_room_boundaries(x, y) }
   end
 
   def input_coords
     input[0...-1]
+  end
+
+  def within_room_boundaries(x, y)
+    (0 <= x && x < room_dimensions[0] && y >= 0 && y < room_dimensions[1])
   end
 
   def valid_instructions?
