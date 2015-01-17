@@ -1,19 +1,30 @@
 class Room
-  attr_reader :x, :y
-  
+  attr_reader :floor
+
   def initialize(dimensions, dirt)
-    @x, @y  = dimensions.split.map(&:to_i)
-    @dirt   = dirt
+    @floor   = Array.new(dimensions.first) { Array.new(dimensions.last, :clean) }
+    add_dirt(dirt)
   end
 
-  def dirt_patch?(position)
-    dirt.include?(position)
+  def add_item(p, item)
+    floor[p.first][p.last] = item
   end
 
-  def remove_dirt(position)
-    dirt.delete(position)
+  def item_present?(pos, item)
+    position(pos) == item
   end
 
   private
-  attr_reader :dirt
+
+  def add_dirt(dirt)
+    dirt.each{ |d| add_item(d, :dirt) }
+  end
+
+  def format_pos(pos)
+    pos.split.map(&:to_i)
+  end
+
+  def position(p)
+    floor[p.first][p.last]
+  end
 end
