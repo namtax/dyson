@@ -1,4 +1,5 @@
-require_relative '../lib/hoover'
-require_relative '../lib/room'
+require 'hoover'
+require 'room'
+require 'runner'
 
 require 'pry'

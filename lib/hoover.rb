@@ -1,60 +1,50 @@
+require 'directions/north_facing'
+require 'directions/south_facing'
+require 'directions/east_facing'
+require 'directions/west_facing'
+
 class Hoover
   attr_accessor :patches_cleaned, :room, :x, :y
 
+  DIR_MAP = { 
+     N: Directions::NorthFacing,
+     S: Directions::SouthFacing,
+     E: Directions::EastFacing,
+     W: Directions::WestFacing
+  }
+
   def initialize(start_pos, room)
-    @x, @y           = start_pos.split.map(&:to_i)
+    @x, @y           = start_pos.first, start_pos.last
     @room            = room
     @patches_cleaned = 0 
+    clean
   end
 
   def run(directions)
-    clean if on_dirt_patch?
-
-    directions.each_char do |direction|
-      go(direction) && (clean if on_dirt_patch?)
+    directions.each_char do |d|
+      DIR_MAP[d.to_sym].go(self, room)
+      clean
     end
   end
 
   def position
-    "#{x} #{y}"
+    [x, y]
+  end
+
+  def status
+    [position.join(" "), patches_cleaned].join("\n")
   end
   
   private
 
-  def on_dirt_patch?
-    room.dirt_patch?(position)
-  end
-
   def clean
-    self.patches_cleaned += 1 
-    room.remove_dirt(position)
+    if on_dirt_patch?
+      room.add_item(position, :clean)
+      self.patches_cleaned += 1 
+    end
   end
 
-  def go(direction)
-    if direction == 'N'
-      go_north
-    elsif direction == 'S'
-      go_south
-    elsif direction == 'E'
-      go_east
-    elsif direction == 'W'
-      go_west
-    end    
-  end
-
-  def go_north
-    @y += 1 if @y < room.y
-  end
-
-  def go_south
-    @y -= 1 if @y > 0
-  end
-
-  def go_east
-    @x += 1 if @x < room.x
-  end
-
-  def go_west
-    @x -= 1 if @x > 0
+  def on_dirt_patch?
+    room.item_present?(position, :dirt)
   end
 end
