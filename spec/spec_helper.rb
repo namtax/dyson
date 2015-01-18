@@ -1,5 +1,2 @@
-require 'hoover'
-require 'room'
-require 'runner'
-
+require 'cli'
 require 'pry'
