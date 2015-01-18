@@ -6,17 +6,17 @@ describe Room do
 
   describe '.initialize' do
     let(:dirt) { [[1, 1], [2, 2]] }
-    it { expect(subject.item_present?([1, 1], :dirt)).to be true }
-    it { expect(subject.item_present?([2, 2], :dirt)).to be true }
-    it { expect(subject.item_present?([3, 2], :dirt)).to be false }
+    it { expect(subject.item_exists?([1, 1], :dirt)).to be true }
+    it { expect(subject.item_exists?([2, 2], :dirt)).to be true }
+    it { expect(subject.item_exists?([3, 2], :dirt)).to be false }
   end
 
-  describe '#remove_item' do
+  describe '#add_item' do
     let(:dirt) { [pos] }
     let(:pos)  { [1, 1] }
-    it 'removes it' do
+    it 'cleans up' do
       subject.add_item(pos, :clean)
-      expect(subject.item_present?(pos, :clean)).to be true
+      expect(subject.item_exists?(pos, :clean)).to be true
     end
   end
 end

@@ -13,8 +13,8 @@ class Hoover
      W: Directions::WestFacing
   }
 
-  def initialize(start_pos, room)
-    @x, @y           = start_pos.first, start_pos.last
+  def initialize(coords, room)
+    @x, @y           = coords.first, coords.last
     @room            = room
     @patches_cleaned = 0 
     clean
@@ -45,6 +45,6 @@ class Hoover
   end
 
   def on_dirt_patch?
-    room.item_present?(position, :dirt)
+    room.item_exists?(position, :dirt)
   end
 end

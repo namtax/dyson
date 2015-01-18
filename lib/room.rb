@@ -1,30 +1,26 @@
 class Room
   attr_reader :floor
 
-  def initialize(dimensions, dirt)
-    @floor   = Array.new(dimensions.first) { Array.new(dimensions.last, :clean) }
-    add_dirt(dirt)
+  def initialize(coords, dirt)
+    @floor   = Array.new(coords.first) { Array.new(coords.last, :clean) }
+    make_a_mess(dirt)
   end
 
-  def add_item(p, item)
-    floor[p.first][p.last] = item
+  def add_item(pos, item)
+    floor[pos.first][pos.last] = item
   end
 
-  def item_present?(pos, item)
-    position(pos) == item
+  def item_exists?(pos, item)
+    floor[pos.first][pos.last] == item
+  end
+
+  def in_boundary?(x, y)
+    floor[x][y] rescue nil
   end
 
   private
 
-  def add_dirt(dirt)
+  def make_a_mess(dirt)
     dirt.each{ |d| add_item(d, :dirt) }
-  end
-
-  def format_pos(pos)
-    pos.split.map(&:to_i)
-  end
-
-  def position(p)
-    floor[p.first][p.last]
   end
 end
