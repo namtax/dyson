@@ -1,2 +1,2 @@
-require 'cli'
+require 'dyson/cli'
 require 'pry'
