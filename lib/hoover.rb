@@ -4,7 +4,7 @@ require 'directions/east_facing'
 require 'directions/west_facing'
 
 class Hoover
-  attr_accessor :patches_cleaned, :room, :x, :y
+  attr_accessor :direction, :patches_cleaned, :room, :x, :y
 
   DIR_MAP = { 
      N: Directions::NorthFacing,
@@ -22,9 +22,14 @@ class Hoover
 
   def run(directions)
     directions.each_char do |d|
-      DIR_MAP[d.to_sym].go(self, room)
+      self.direction = DIR_MAP[d.to_sym]
+      go
       clean
     end
+  end
+
+  def go
+    direction.go(self, room)
   end
 
   def position
