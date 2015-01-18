@@ -11,9 +11,9 @@ module Dyson
     end
 
     def validate
-      raise 'Please provide full input - see readme!' unless valid_input?
-      raise 'Please provide valid coords - see readme!' unless valid_input_coords?
-      raise 'Please provide valid instructions - see readme!' unless valid_instructions?
+      raise 'Please provide full input use --help for more info' unless valid_input?
+      raise 'Please provide valid coords use --help for more info' unless valid_input_coords?
+      raise 'Please provide valid instructions use --help for more info' unless valid_instructions?
     end
 
     def valid_input?
