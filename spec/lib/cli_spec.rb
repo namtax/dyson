@@ -17,7 +17,7 @@ module Dyson
     context 'help' do
       let(:opts) { ['--help']}
       let(:help) { ['----------------------------',
-                    'Please store an input.txt file at Dyson/bin',
+                    'Please store an input.txt file at dyson/bin',
                     'Example:',
                     '5 5 #Room dimensions',
                     '1 2 #Hoover start position',

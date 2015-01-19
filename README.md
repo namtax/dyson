@@ -8,37 +8,46 @@ Dyson is an automated robo-hoover, feed it instructions and let it go to work. O
 ###Example
 ```
 sh$ bin/dyson
-1 3 
+1 3  
 1   
 ```
 
 ###Installation
 
-Clone this repository to a local directory.
+Clone repository.
 
 ```
 git clone git@github.com:namtax/dyson.git
 ```
-Store program input at Dyson/bin/input.txt - following the formatting rules. There is an example file located within the bin folder for reference. 
-
+Create program input using the example file.
 ```
-5 5 # All co-ords seperated by a single space
+mv dyson/bin/input.txt.example dyson/bin/input.txt
+```
+Update the file to your liking.
+Example: 
+```
+5 5 
 1 2
 1 0
 2 2
 2 3
-NNESEESWNWW # One or more directions (N|E|S|W)
+NNESEESWNWW
 ```
+
+- The first line holds the room dimensions (X Y), separated by a single space (all coordinates will be presented in this format)
+- The second line holds the hoover position
+- Subsequent lines contain the zero or more positions of patches of dirt (one per line)
+- The final line then always contains the driving instructions (at least one)
 
 ###Usage
 Run the following command from Dyson root. 
 
 ```
-cd Dyson
+cd dyson
 bin/dyson
 ```
 
-Ask for help if you encounter any problems with the input file.
+If stuck - ask for help.
 
 ```
 bin/dyson --help

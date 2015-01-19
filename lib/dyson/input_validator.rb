@@ -22,7 +22,7 @@ module Dyson
 
     def valid_input_coords?
       (valid_coords.count == REQUIRED_NUMBER_OF_COORDS) &&
-        (item_positions).all?{ |x,y| within_room_boundaries(x, y) }
+      (item_positions).all?{ |x,y| within_room_boundaries(x, y) }
     end
 
     def valid_coords
