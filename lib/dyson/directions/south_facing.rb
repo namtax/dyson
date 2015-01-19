@@ -1,8 +1,12 @@
 module Dyson
   module Directions
     module SouthFacing
-      def self.go(hoover, room)
-        hoover.y -= 1 if hoover.y > 0
+      def self.go(hoover)
+        hoover.y -= 1
+      end
+
+      def self.undo(hoover)
+        hoover.y += 1
       end
     end
   end

@@ -12,7 +12,7 @@ module Dyson
 
       context 'multi' do
         let(:start_pos) { [0, 0]}
-        it 'slides' do
+        it 'returns to start' do
           subject.run('EEWW')
           expect(subject.position).to eq [0, 0]
         end

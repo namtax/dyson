@@ -1,8 +1,12 @@
 module Dyson
   module Directions
     module WestFacing
-      def self.go(hoover, room)
-        hoover.x -= 1 if hoover.x > 0
+      def self.go(hoover)
+        hoover.x -= 1
+      end
+
+      def self.undo(hoover)
+        hoover.x += 1
       end
     end
   end

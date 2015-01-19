@@ -20,5 +20,12 @@ module Dyson
         expect(subject.item_exists?(pos, :clean)).to be true
       end
     end
+
+    describe '#out_of_bounds' do
+      it { expect(subject.out_of_bounds?(5, 0)).to be true }
+      it { expect(subject.out_of_bounds?(0, 5)).to be true }
+      it { expect(subject.out_of_bounds?(5, 5)).to be true }
+      it { expect(subject.out_of_bounds?(4, 4)).to be false }
+    end
   end
 end

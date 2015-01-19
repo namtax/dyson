@@ -15,8 +15,8 @@ module Dyson
       floor[pos.first][pos.last] == item
     end
 
-    def in_boundary?(x, y)
-      floor[x][y] rescue nil
+    def out_of_bounds?(x, y)
+      (x < 0 || x > floor.size-1 || y < 0 || y > floor[0].size-1)
     end
 
     private

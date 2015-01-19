@@ -6,12 +6,10 @@ module Dyson
       let(:room)      { Room.new([5, 5], dirt) }
       let(:dirt)      { [] }
 
-      before { subject.direction = SouthFacing }
-
       describe '#go' do
         context 'success' do
           it 'moves up' do
-            subject.go
+            subject.run('S')
             expect(subject.position).to eq [1, 1]
           end
         end
@@ -19,7 +17,7 @@ module Dyson
         context 'boundary' do
           let(:start_pos) { [1, 0] }
           it 'slides' do
-            subject.go
+            subject.run('S')
             expect(subject.position).to eq [1, 0]
           end
         end
